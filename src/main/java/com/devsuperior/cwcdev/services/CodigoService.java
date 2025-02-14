@@ -1,9 +1,10 @@
 package com.devsuperior.cwcdev.services;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +30,23 @@ public class CodigoService {
 				.orElseThrow(() -> new ResourceNotFoundException("Recurso não encontrado"));
 		return new CodigoDTO(result);
 	}
+	
+	@Transactional(readOnly = true)
+	public List<CodigoDTO> findAll() {
+	    List<Codigo> result = repository.findAll(); // Retorna a lista de entidades
+	    return result.stream().map(CodigoDTO::new).collect(Collectors.toList()); // Converte para DTO
+	}
+ 
+	@Transactional(readOnly = true)
+	public List<CodigoDTO> searchCodes(String keyword) {
+	    List<Codigo> result = repository.findByLinguagemContainingIgnoreCaseOrDescricaoContainingIgnoreCase(keyword, keyword);
+	    return result.stream().map(CodigoDTO::new).collect(Collectors.toList());
+	}
+
+	
+	
+	
+
 
 	@Transactional
 	public CodigoDTO insert(CodigoDTO dto) {
