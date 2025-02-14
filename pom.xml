@@ -108,17 +108,17 @@
 				<configuration>
 					<excludes>
 						<exclude>
-							com/devsuperior/dscommerce/DscommerceApplication.class</exclude>
-						<exclude>com/devsuperior/dscommerce/config/**</exclude>
-						<exclude>com/devsuperior/dscommerce/entities/**</exclude>
-						<exclude>com/devsuperior/dscommerce/dto/**</exclude>
-						<exclude>com/devsuperior/dscommerce</exclude>
-						<exclude>com/devsuperior/dscommerce/util/**</exclude>
-						<exclude>com/devsuperior/dscommerce/controllers/**</exclude>
+							com/devsuperior/cwcdev/CwcdevApplication.class</exclude>
+						<exclude>com/devsuperior/cwcdev/config/**</exclude>
+						<exclude>com/devsuperior/cwcdev/entities/**</exclude>
+						<exclude>com/devsuperior/cwcdev/dto/**</exclude>
+						
+						<exclude>com/devsuperior/cwcdev/util/**</exclude>
+						<exclude>com/devsuperior/cwcdev/controllers/**</exclude>						
+						<exclude>com/devsuperior/cwcdev/Exceptions/**</exclude>
 						<exclude>
-							com/devsuperior/dscommerce/controllers/handlers/**</exclude>
-						<exclude>
-							com/devsuperior/dscommerce/services/exceptions/**</exclude>
+							com/devsuperior/cwcdev/handlers/**</exclude>
+						
 					</excludes>
 				</configuration>
 				<executions>

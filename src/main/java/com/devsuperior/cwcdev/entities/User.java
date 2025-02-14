@@ -74,15 +74,19 @@ public class User implements UserDetails {
         this.name = name;
     }
 
-    public String getEmail() {
-        return email;
-    }
+  
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    public Set<Role> getRoles() {
+		return roles;
+	}
 
-    public String getPhone() {
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+
+	
+
+	public String getPhone() {
         return phone;
     }
 
@@ -108,7 +112,15 @@ public class User implements UserDetails {
 
    
 
-    public void addRole(Role role) {
+    public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void addRole(Role role) {
     	roles.add(role);
     }
     
@@ -141,11 +153,7 @@ public class User implements UserDetails {
 		return roles;
 	}
 
-	@Override
-	public String getUsername() {
-		return email;
-	}
-
+	
 	@Override
 	public boolean isAccountNonExpired() {
 		return true;
@@ -164,5 +172,11 @@ public class User implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 		return true;
+	}
+
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return email;
 	}
 }

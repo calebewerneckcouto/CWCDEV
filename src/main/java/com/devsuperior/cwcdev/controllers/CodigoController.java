@@ -1,12 +1,12 @@
 package com.devsuperior.cwcdev.controllers;
 
 import java.net.URI;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -42,13 +43,7 @@ public class CodigoController {
     	CodigoDTO dto = service.findById(id);
         return ResponseEntity.ok(dto);
     }
-    @Operation(description = "Get All Codes", summary = "List all codes", responses = {
-			@ApiResponse(description = "Ok", responseCode = "200"), })
-    @GetMapping
-    public ResponseEntity<List<CodigoDTO>> findAll() {
-        List<CodigoDTO> dtoList = service.findAll();
-        return ResponseEntity.ok(dtoList);
-    }
+    
 
 
 

@@ -10,7 +10,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-@SuppressWarnings("serial")
 @Entity
 @Table(name = "tb_role")
 public class Role implements GrantedAuthority {
@@ -21,6 +20,11 @@ public class Role implements GrantedAuthority {
 	private String authority;
 
 	public Role() {
+	}
+
+	// 🔹 New constructor that accepts only authority
+	public Role(String authority) {
+		this.authority = authority;
 	}
 
 	public Role(Long id, String authority) {

@@ -1,12 +1,10 @@
 package com.devsuperior.cwcdev.services;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.devsuperior.cwcdev.Exceptions.DatabaseException;
@@ -20,66 +18,52 @@ import jakarta.persistence.EntityNotFoundException;
 @Service
 public class CodigoService {
 
-    @Autowired
-    private CodigoRepository repository;
+	@Autowired
+	private CodigoRepository repository;
 
-    @Transactional(readOnly = true)
-    public CodigoDTO findById(Long id) {
-        Codigo product = repository.findById(id).orElseThrow(
-                () -> new com.devsuperior.cwcdev.Exceptions.ResourceNotFoundException("Recurso não encontrado"));
-        return new CodigoDTO(product);
-    }
+	
 
-    @Transactional(readOnly = true)
-    public List<CodigoDTO> findAll() {
-        List<Codigo> result = repository.findAll();
-        return result.stream().map(CodigoDTO::new).collect(Collectors.toList());
-    }
+	@Transactional(readOnly = true)
+	public CodigoDTO findById(Long id) {
+		Codigo result = repository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Recurso não encontrado"));
+		return new CodigoDTO(result);
+	}
 
+	@Transactional
+	public CodigoDTO insert(CodigoDTO dto) {
+		Codigo entity = new Codigo();
+		copyDtoToEntity(dto, entity);
+		entity = repository.save(entity);
+		return new CodigoDTO(entity);
+	}
 
+	@Transactional
+	public CodigoDTO update(Long id, CodigoDTO dto) {
+		try {
+			Codigo entity = repository.getReferenceById(id);
+			copyDtoToEntity(dto, entity);
+			entity = repository.save(entity);
+			return new CodigoDTO(entity);
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException("Recurso não encontrado");
+		}
+	}
 
+	public void delete(Long id) {
+		if (!repository.existsById(id))
+			throw new ResourceNotFoundException("Recurso não encontrado");
+		try {
+			repository.deleteById(id);
+		} catch (DataIntegrityViolationException e) {
+			throw new DatabaseException("Falha de integridade referencial");
+		}
+	}
 
-    @Transactional
-    public CodigoDTO insert(CodigoDTO dto) {
-        Codigo entity = new Codigo();
-        copyDtoToEntity(dto, entity);
-        entity = repository.save(entity);
-        return new CodigoDTO(entity);
-    }
-
-    @Transactional
-    public CodigoDTO update(Long id, CodigoDTO dto) {
-        try {
-            Codigo entity = repository.getReferenceById(id);
-            copyDtoToEntity(dto, entity);
-            entity = repository.save(entity);
-            return new CodigoDTO(entity);
-        }
-        catch (EntityNotFoundException e) {
-            throw new ResourceNotFoundException("Recurso não encontrado");
-        }
-    }
-
-    @Transactional(propagation = Propagation.SUPPORTS)
-    public void delete(Long id) {
-    	if (!repository.existsById(id)) {
-    		throw new ResourceNotFoundException("Recurso não encontrado");
-    	}
-    	try {
-            repository.deleteById(id);    		
-    	}
-        catch (DataIntegrityViolationException e) {
-            throw new DatabaseException("Falha de integridade referencial");
-        }
-    }
-
-    private void copyDtoToEntity(CodigoDTO dto, Codigo entity) {
-       
-        entity.setLinguagem(dto.getLinguagem());
-        entity.setDescricao(dto.getDescricao());
-        entity.setCodigo(dto.getCodigo());
-        entity.setImgUrl(dto.getImgUrl());
-        
-        
-    }
+	private void copyDtoToEntity(CodigoDTO dto, Codigo entity) {
+		entity.setCodigo(dto.getCodigo());
+		entity.setDescricao(dto.getDescricao());
+		entity.setImgUrl(dto.getImgUrl());
+		entity.setLinguagem(dto.getLinguagem());
+	}
 }
