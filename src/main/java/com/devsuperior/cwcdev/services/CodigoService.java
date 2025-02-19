@@ -22,31 +22,27 @@ public class CodigoService {
 	@Autowired
 	private CodigoRepository repository;
 
-	
-
 	@Transactional(readOnly = true)
 	public CodigoDTO findById(Long id) {
 		Codigo result = repository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Recurso não encontrado"));
 		return new CodigoDTO(result);
+		
 	}
+
 	
 	@Transactional(readOnly = true)
 	public List<CodigoDTO> findAll() {
-	    List<Codigo> result = repository.findAll(); // Retorna a lista de entidades
-	    return result.stream().map(CodigoDTO::new).collect(Collectors.toList()); // Converte para DTO
+		List<Codigo> result = repository.findAll(); // Retorna a lista de entidades
+		return result.stream().map(CodigoDTO::new).collect(Collectors.toList()); // Converte para DTO
 	}
- 
+
 	@Transactional(readOnly = true)
 	public List<CodigoDTO> searchCodes(String keyword) {
-	    List<Codigo> result = repository.findByLinguagemContainingIgnoreCaseOrDescricaoContainingIgnoreCase(keyword, keyword);
-	    return result.stream().map(CodigoDTO::new).collect(Collectors.toList());
+		List<Codigo> result = repository.findByLinguagemContainingIgnoreCaseOrDescricaoContainingIgnoreCase(keyword,
+				keyword);
+		return result.stream().map(CodigoDTO::new).collect(Collectors.toList());
 	}
-
-	
-	
-	
-
 
 	@Transactional
 	public CodigoDTO insert(CodigoDTO dto) {
@@ -84,4 +80,7 @@ public class CodigoService {
 		entity.setImgUrl(dto.getImgUrl());
 		entity.setLinguagem(dto.getLinguagem());
 	}
+
+
+	
 }

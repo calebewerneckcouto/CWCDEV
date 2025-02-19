@@ -12,6 +12,7 @@
 	<groupId>com.devsuperior</groupId>
 	<artifactId>aula</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
 	<name>aula</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
@@ -22,6 +23,14 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+
+		
+		<dependency>
+			<groupId>org.glassfish.jaxb</groupId>
+			<artifactId>jaxb-runtime</artifactId>
+			<version>2.3.1</version>
+		</dependency>
+
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -77,9 +86,16 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+
+		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<version>9.4.1212</version>
+			<version>42.7.3</version> <!-- Última versão estável -->
 		</dependency>
 
 	</dependencies>
@@ -112,13 +128,13 @@
 						<exclude>com/devsuperior/cwcdev/config/**</exclude>
 						<exclude>com/devsuperior/cwcdev/entities/**</exclude>
 						<exclude>com/devsuperior/cwcdev/dto/**</exclude>
-						
+
 						<exclude>com/devsuperior/cwcdev/util/**</exclude>
-						<exclude>com/devsuperior/cwcdev/controllers/**</exclude>						
+						<exclude>com/devsuperior/cwcdev/controllers/**</exclude>
 						<exclude>com/devsuperior/cwcdev/Exceptions/**</exclude>
 						<exclude>
 							com/devsuperior/cwcdev/handlers/**</exclude>
-						
+
 					</excludes>
 				</configuration>
 				<executions>
